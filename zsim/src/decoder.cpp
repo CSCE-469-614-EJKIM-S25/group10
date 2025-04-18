@@ -172,6 +172,7 @@ void Decoder::emitLoad(Instr& instr, uint32_t idx, DynUopVec& uops, uint32_t des
     uop.rd[0] = destReg;
     uop.type = UOP_LOAD;
     uop.portMask = PORT_2;
+    uop.pc = INS_Address(instr.ins);
     uops.push_back(uop); //FIXME: The interface should support in-place grow...
 }
 
@@ -199,6 +200,7 @@ void Decoder::emitStore(Instr& instr, uint32_t idx, DynUopVec& uops, uint32_t sr
     addrUop.lat = 1;
     addrUop.portMask = PORT_3;
     addrUop.type = UOP_STORE_ADDR;
+    addrUop.pc = INS_Address(instr.ins);
     uops.push_back(addrUop);
 
     //Emit store uop
@@ -208,6 +210,7 @@ void Decoder::emitStore(Instr& instr, uint32_t idx, DynUopVec& uops, uint32_t sr
     uop.rs[1] = srcReg;
     uop.portMask = PORT_4;
     uop.type = UOP_STORE;
+    uop.pc = INS_Address(instr.ins);
     uops.push_back(uop);
 }
 
@@ -545,7 +548,15 @@ bool Decoder::decodeInstr(INS ins, DynUopVec& uops) {
     xed_iclass_enum_t opcode = (xed_iclass_enum_t) INS_Opcode(ins);
 
     Instr instr(ins);
-
+    
+    ADDRINT instrAddr = INS_Address(ins); // Get the PC from the instruction
+ 
+     if (uops.size() > 0) { // set the PC for all uops
+         for (auto& uop : uops) {
+             uop.pc = instrAddr;
+         }
+     }
+    
     bool isLocked = false;
     // NOTE(dsm): IsAtomicUpdate == xchg or LockPrefix (xchg has in implicit lock prefix)
     if (INS_IsAtomicUpdate(instr.ins)) {
@@ -553,7 +564,8 @@ bool Decoder::decodeInstr(INS ins, DynUopVec& uops) {
         emitFence(uops, 0); //serialize the initial load w.r.t. all prior stores
     }
 
-
+    uint32_t uopsBefore = initialUops;
+    
     switch (category) {
         //NOPs are optimized out in the execution pipe, but they still grab a ROB entry
         case XC(NOP):
@@ -1216,7 +1228,10 @@ bool Decoder::decodeInstr(INS ins, DynUopVec& uops) {
         //inaccurate = true; //this is now fairly accurate
         emitFence(uops, 9); //locked ops introduce an additional uop and cache locking takes 14 cycles/instr per the perf counters; latencies match with 9 cycles of fence latency
     }
-
+    for (uint32_t i = uopsBefore; i < uops.size(); i++) { //set pc for new uops
+         uops[i].pc = instrAddr;
+     }
+    
     assert(uops.size() - initialUops < MAX_UOPS_PER_INSTR);
     //assert_msg(uops.size() - initialUops < MAX_UOPS_PER_INSTR, "%ld -> %ld uops", initialUops, uops.size());
     return inaccurate;

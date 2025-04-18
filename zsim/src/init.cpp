@@ -170,7 +170,8 @@ BaseCache* BuildCacheBank(Config& config, const string& prefix, g_string& name, 
         uint32_t rpvMax = 3;
         assert(isPow2(rpvMax + 1));
         // add your SRRIP construction code here
-
+    } else if(replType == "Mockingjay"){
+        //initialize mockingjay stuff here
     } else if (replType == "WayPart" || replType == "Vantage" || replType == "IdealLRUPart") {
         if (replType == "WayPart" && arrayType != "SetAssoc") panic("WayPart replacement requires SetAssoc array");
 

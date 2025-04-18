@@ -99,7 +99,8 @@ struct MemReq {
         PREFETCH      = (1<<5), //Prefetch GETS access. Only set at level where prefetch is issued; handled early in MESICC
     };
     uint32_t flags;
-
+    Address pc;
+    
     inline void set(Flag f) {flags |= f;}
     inline bool is (Flag f) const {return flags & f;}
 };
