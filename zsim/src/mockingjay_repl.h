@@ -35,14 +35,19 @@ class MockingjayReplPolicy : public ReplPolicy {
         // add member methods here, refer to repl_policies.h
         void update(uint32_t id, const MemReq* req) {
           //update values if accesses = GRANULARITY
-          if(etr_clock[(req->lineAddr >> (uint32_t)(log2(lineSize) + log2(llc_ways)) )] == GRANULARITY){
-            //TODO: loop through items in the same set and decrement the etr
-            //problem is accessing things from same set as we don't know line IDs
-
-            etr_clock[(req->lineAddr >> (lineSize + llc_ways))] = 0;
+          //this may be incorrect, but I'm not sure how to get set number otherwise
+          uint32_t shamt = (uint32_t)(log2(lineSize) + log2(llc_ways));
+          int set = (id >> shamt); //get only set bits
+          if(etr_clock[set] == GRANULARITY){
+            uint32_t start = set << shamt; //id of first element in set, set# followed by log2(set size) zeroes
+            //loop through set and decrement
+            for(int i = start; i < (start + llc_ways); i++){
+              etr[i]--;
+            }
+            etr_clock[set] = 0;
           }
           else{
-            etr_clock[(req->lineAddr >> (lineSize + llc_ways))]++;
+            etr_clock[set]++;
           }
         }
         
