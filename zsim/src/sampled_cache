@@ -1,0 +1,48 @@
+#define NUM_SAMPLED_SETS 32
+#define HISTORY_LENGTH 128  // for 16-way LLC, 8× history
+struct SampleEntry {
+    bool valid;
+    uint64_t tag;
+    uint64_t pc_signature;
+    uint8_t timestamp;
+};
+std::vector<SampleEntry> sampled_cache[NUM_SAMPLED_SETS];
+uint8_t sampled_time[NUM_SAMPLED_SETS];
+void access_sampled_cache(uint64_t addr, uint64_t pc_sig) {
+    int set = addr % NUM_SAMPLED_SETS;
+    uint64_t tag = addr >> 6;
+
+    for (auto &entry : sampled_cache[set]) {
+        if (entry.valid && entry.tag == tag) {
+            // HIT → Calculate reuse distance
+            int dist = sampled_time[set] - entry.timestamp;
+            train_rdp(entry.pc_signature, dist);
+            entry.timestamp = sampled_time[set];
+            return;
+        }
+    }
+    // MISS → train previous entry as scan if evicted
+    int victim_idx = 0;
+    uint8_t oldest = 255;
+    for (int i = 0; i < sampled_cache[set].size(); ++i) {
+        if (!sampled_cache[set][i].valid) {
+            victim_idx = i;
+            break;
+        }
+        if (sampled_cache[set][i].timestamp < oldest) {
+            oldest = sampled_cache[set][i].timestamp;
+            victim_idx = i;
+        }
+    }
+
+    auto &victim = sampled_cache[set][victim_idx];
+    if (victim.valid)
+        train_rdp(victim.pc_signature, INF_RD);  
+
+    victim.valid = true;
+    victim.tag = tag;
+    victim.pc_signature = pc_sig;
+    victim.timestamp = sampled_time[set];
+
+    sampled_time[set] = (sampled_time[set] + 1) & 0xFF;  
+}
