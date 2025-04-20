@@ -1,13 +1,17 @@
 #define NUM_SAMPLED_SETS 32
-#define HISTORY_LENGTH 128  // for 16-way LLC, 8× history
+#define HISTORY_PER_SET 128
+#define TIMESTAMP_MAX 256
+#define INF_RD 127
+
 struct SampleEntry {
-    bool valid;
-    uint64_t tag;
-    uint64_t pc_signature;
-    uint8_t timestamp;
+    bool valid = false;
+    uint64_t tag = 0;
+    uint64_t pc_sig = 0;
+    uint8_t timestamp = 0;
 };
+
 std::vector<SampleEntry> sampled_cache[NUM_SAMPLED_SETS];
-uint8_t sampled_time[NUM_SAMPLED_SETS];
+uint8_t sampled_time[NUM_SAMPLED_SETS] = {0};
 void access_sampled_cache(uint64_t addr, uint64_t pc_sig) {
     int set = addr % NUM_SAMPLED_SETS;
     uint64_t tag = addr >> 6;
