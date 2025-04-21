@@ -20,6 +20,7 @@ class MockingjayReplPolicy : public ReplPolicy {
         int INF_ETR = 127; //etr value for percieved scans
         int MAX_RD = 104; //etr threshold for non-scan values
         int GRANULARITY = 8; //how many accesses before decrementing etr's
+
     public:
         //we may want to change this
         explicit MockingjayReplPolicy(uint32_t _numLines, uint32_t _numWays, uint32_t _lineSize) : numLines(_numLines), llc_ways(_numWays), lineSize(_lineSize) {
@@ -35,11 +36,9 @@ class MockingjayReplPolicy : public ReplPolicy {
         // add member methods here, refer to repl_policies.h
         void update(uint32_t id, const MemReq* req) {
           //update values if accesses = GRANULARITY
-          //this may be incorrect, but I'm not sure how to get set number otherwise
-          uint32_t shamt = (uint32_t)(log2(lineSize) + log2(llc_ways));
-          int set = (id >> shamt); //get only set bits
+          int set = (id/llc_ways); //size of etr array is sets*ways, effectively getting bits for set here
           if(etr_clock[set] == GRANULARITY){
-            uint32_t start = set << shamt; //id of first element in set, set# followed by log2(set size) zeroes
+            uint32_t start = (id/llc_ways)*llc_ways; //id of first element in set (used integer devision to round down to multiple of ways)
             //loop through set and decrement
             for(int i = start; i < (start + llc_ways); i++){
               etr[i]--;
