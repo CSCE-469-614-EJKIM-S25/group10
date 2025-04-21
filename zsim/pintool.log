@@ -1,0 +1,3 @@
+Pin 2.14 kit 71293
+A:  Source/pin/elfio/img_elf.cpp: ProcessSectionHeaders: 663: strange section type for .annobin.notes
+

@@ -1,3 +1,5 @@
 benchmarks/
 single-benchmark.zip
 *.pyc
+py_env/
+py_venv/

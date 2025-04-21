@@ -1,0 +1,232 @@
+Wed Mar 12 18:02:57 CDT 2025 - Script started
+Wed Mar 12 18:02:57 CDT 2025 - Executing: ./hw4runscript PARSEC blackscholes LRU
+./build/opt/zsim configs/hw4/LRU/blackscholes_8c_simlarge.cfg > outputs/hw4/LRU/blackscholes_8c_simlarge/blackscholes.log 2>&1
+Wed Mar 12 18:03:49 CDT 2025 - Finished: ./hw4runscript PARSEC blackscholes LRU
+Wed Mar 12 18:03:49 CDT 2025 - Executing: ./hw4runscript PARSEC blackscholes LFU
+./build/opt/zsim configs/hw4/LFU/blackscholes_8c_simlarge.cfg > outputs/hw4/LFU/blackscholes_8c_simlarge/blackscholes.log 2>&1
+Wed Mar 12 18:03:49 CDT 2025 - Finished: ./hw4runscript PARSEC blackscholes LFU
+Wed Mar 12 18:03:49 CDT 2025 - Executing: ./hw4runscript PARSEC bodytrack LRU
+./build/opt/zsim configs/hw4/LRU/bodytrack_8c_simlarge.cfg > outputs/hw4/LRU/bodytrack_8c_simlarge/bodytrack.log 2>&1
+Wed Mar 12 18:07:26 CDT 2025 - Finished: ./hw4runscript PARSEC bodytrack LRU
+Wed Mar 12 18:07:26 CDT 2025 - Executing: ./hw4runscript PARSEC bodytrack LFU
+./build/opt/zsim configs/hw4/LFU/bodytrack_8c_simlarge.cfg > outputs/hw4/LFU/bodytrack_8c_simlarge/bodytrack.log 2>&1
+Wed Mar 12 18:07:26 CDT 2025 - Finished: ./hw4runscript PARSEC bodytrack LFU
+Wed Mar 12 18:07:26 CDT 2025 - Executing: ./hw4runscript PARSEC canneal LRU
+./build/opt/zsim configs/hw4/LRU/canneal_8c_simlarge.cfg > outputs/hw4/LRU/canneal_8c_simlarge/canneal.log 2>&1
+Wed Mar 12 18:09:14 CDT 2025 - Finished: ./hw4runscript PARSEC canneal LRU
+Wed Mar 12 18:09:14 CDT 2025 - Executing: ./hw4runscript PARSEC canneal LFU
+./build/opt/zsim configs/hw4/LFU/canneal_8c_simlarge.cfg > outputs/hw4/LFU/canneal_8c_simlarge/canneal.log 2>&1
+Wed Mar 12 18:09:14 CDT 2025 - Finished: ./hw4runscript PARSEC canneal LFU
+Wed Mar 12 18:09:14 CDT 2025 - Executing: ./hw4runscript PARSEC dedup LRU
+./build/opt/zsim configs/hw4/LRU/dedup_8c_simlarge.cfg > outputs/hw4/LRU/dedup_8c_simlarge/dedup.log 2>&1
+Wed Mar 12 18:17:02 CDT 2025 - Finished: ./hw4runscript PARSEC dedup LRU
+Wed Mar 12 18:17:02 CDT 2025 - Executing: ./hw4runscript PARSEC dedup LFU
+./build/opt/zsim configs/hw4/LFU/dedup_8c_simlarge.cfg > outputs/hw4/LFU/dedup_8c_simlarge/dedup.log 2>&1
+Wed Mar 12 18:21:32 CDT 2025 - Received termination signal. Exiting script.
+Wed Mar 12 18:31:24 CDT 2025 - Script started
+Wed Mar 12 18:31:24 CDT 2025 - Skipping: ./hw4runscript PARSEC blackscholes LRU (Already executed)
+Wed Mar 12 18:31:24 CDT 2025 - Executing: ./hw4runscript PARSEC blackscholes LFU
+./build/opt/zsim configs/hw4/LFU/blackscholes_8c_simlarge.cfg > outputs/hw4/LFU/blackscholes_8c_simlarge/blackscholes.log 2>&1
+Wed Mar 12 18:32:16 CDT 2025 - Finished: ./hw4runscript PARSEC blackscholes LFU
+Wed Mar 12 18:32:16 CDT 2025 - Skipping: ./hw4runscript PARSEC bodytrack LRU (Already executed)
+Wed Mar 12 18:32:16 CDT 2025 - Executing: ./hw4runscript PARSEC bodytrack LFU
+./build/opt/zsim configs/hw4/LFU/bodytrack_8c_simlarge.cfg > outputs/hw4/LFU/bodytrack_8c_simlarge/bodytrack.log 2>&1
+Wed Mar 12 18:35:05 CDT 2025 - Finished: ./hw4runscript PARSEC bodytrack LFU
+Wed Mar 12 18:35:05 CDT 2025 - Skipping: ./hw4runscript PARSEC canneal LRU (Already executed)
+Wed Mar 12 18:35:05 CDT 2025 - Executing: ./hw4runscript PARSEC canneal LFU
+./build/opt/zsim configs/hw4/LFU/canneal_8c_simlarge.cfg > outputs/hw4/LFU/canneal_8c_simlarge/canneal.log 2>&1
+Wed Mar 12 18:36:49 CDT 2025 - Finished: ./hw4runscript PARSEC canneal LFU
+Wed Mar 12 18:36:49 CDT 2025 - Executing: ./hw4runscript PARSEC fluidanimate LRU
+./build/opt/zsim configs/hw4/LRU/fluidanimate_8c_simlarge.cfg > outputs/hw4/LRU/fluidanimate_8c_simlarge/fluidanimate.log 2>&1
+Wed Mar 12 18:38:03 CDT 2025 - Finished: ./hw4runscript PARSEC fluidanimate LRU
+Wed Mar 12 18:38:03 CDT 2025 - Executing: ./hw4runscript PARSEC fluidanimate LFU
+./build/opt/zsim configs/hw4/LFU/fluidanimate_8c_simlarge.cfg > outputs/hw4/LFU/fluidanimate_8c_simlarge/fluidanimate.log 2>&1
+Wed Mar 12 18:39:17 CDT 2025 - Finished: ./hw4runscript PARSEC fluidanimate LFU
+Wed Mar 12 18:39:17 CDT 2025 - Executing: ./hw4runscript PARSEC freqmine LRU
+./build/opt/zsim configs/hw4/LRU/freqmine_8c_simlarge.cfg > outputs/hw4/LRU/freqmine_8c_simlarge/freqmine.log 2>&1
+Wed Mar 12 18:39:19 CDT 2025 - Finished: ./hw4runscript PARSEC freqmine LRU
+Wed Mar 12 18:39:19 CDT 2025 - Executing: ./hw4runscript PARSEC freqmine LFU
+./build/opt/zsim configs/hw4/LFU/freqmine_8c_simlarge.cfg > outputs/hw4/LFU/freqmine_8c_simlarge/freqmine.log 2>&1
+Wed Mar 12 18:39:21 CDT 2025 - Finished: ./hw4runscript PARSEC freqmine LFU
+Wed Mar 12 18:39:21 CDT 2025 - Executing: ./hw4runscript PARSEC streamcluster LRU
+./build/opt/zsim configs/hw4/LRU/streamcluster_8c_simlarge.cfg > outputs/hw4/LRU/streamcluster_8c_simlarge/streamcluster.log 2>&1
+Wed Mar 12 18:41:28 CDT 2025 - Finished: ./hw4runscript PARSEC streamcluster LRU
+Wed Mar 12 18:41:28 CDT 2025 - Executing: ./hw4runscript PARSEC streamcluster LFU
+./build/opt/zsim configs/hw4/LFU/streamcluster_8c_simlarge.cfg > outputs/hw4/LFU/streamcluster_8c_simlarge/streamcluster.log 2>&1
+Wed Mar 12 18:43:22 CDT 2025 - Finished: ./hw4runscript PARSEC streamcluster LFU
+Wed Mar 12 18:43:22 CDT 2025 - Executing: ./hw4runscript PARSEC swaptions LRU
+./build/opt/zsim configs/hw4/LRU/swaptions_8c_simlarge.cfg > outputs/hw4/LRU/swaptions_8c_simlarge/swaptions.log 2>&1
+Wed Mar 12 18:44:17 CDT 2025 - Finished: ./hw4runscript PARSEC swaptions LRU
+Wed Mar 12 18:44:17 CDT 2025 - Executing: ./hw4runscript PARSEC swaptions LFU
+./build/opt/zsim configs/hw4/LFU/swaptions_8c_simlarge.cfg > outputs/hw4/LFU/swaptions_8c_simlarge/swaptions.log 2>&1
+Wed Mar 12 18:45:15 CDT 2025 - Finished: ./hw4runscript PARSEC swaptions LFU
+Wed Mar 12 18:45:15 CDT 2025 - Executing: ./hw4runscript PARSEC x264 LRU
+./build/opt/zsim configs/hw4/LRU/x264_8c_simlarge.cfg > outputs/hw4/LRU/x264_8c_simlarge/x264.log 2>&1
+Wed Mar 12 18:48:43 CDT 2025 - Finished: ./hw4runscript PARSEC x264 LRU
+Wed Mar 12 18:48:43 CDT 2025 - Executing: ./hw4runscript PARSEC x264 LFU
+./build/opt/zsim configs/hw4/LFU/x264_8c_simlarge.cfg > outputs/hw4/LFU/x264_8c_simlarge/x264.log 2>&1
+Wed Mar 12 18:52:08 CDT 2025 - Finished: ./hw4runscript PARSEC x264 LFU
+Wed Mar 12 18:52:08 CDT 2025 - Script finished successfully
+Wed Mar 12 19:38:50 CDT 2025 - Script started
+Wed Mar 12 19:38:50 CDT 2025 - Executing: ./hw4runscript SPEC bzip2 LRU
+./build/opt/zsim configs/hw4/LRU/bzip2.cfg > outputs/hw4/LRU/bzip2/bzip2.log 2>&1
+Wed Mar 12 19:39:44 CDT 2025 - Finished: ./hw4runscript SPEC bzip2 LRU
+Wed Mar 12 19:39:44 CDT 2025 - Executing: ./hw4runscript SPEC bzip2 LFU
+./build/opt/zsim configs/hw4/LFU/bzip2.cfg > outputs/hw4/LFU/bzip2/bzip2.log 2>&1
+Wed Mar 12 19:40:37 CDT 2025 - Finished: ./hw4runscript SPEC bzip2 LFU
+Wed Mar 12 19:40:37 CDT 2025 - Executing: ./hw4runscript SPEC gcc LRU
+./build/opt/zsim configs/hw4/LRU/gcc.cfg > outputs/hw4/LRU/gcc/gcc.log 2>&1
+Wed Mar 12 19:48:58 CDT 2025 - Finished: ./hw4runscript SPEC gcc LRU
+Wed Mar 12 19:48:58 CDT 2025 - Executing: ./hw4runscript SPEC gcc LFU
+./build/opt/zsim configs/hw4/LFU/gcc.cfg > outputs/hw4/LFU/gcc/gcc.log 2>&1
+Wed Mar 12 19:57:18 CDT 2025 - Finished: ./hw4runscript SPEC gcc LFU
+Wed Mar 12 19:57:18 CDT 2025 - Executing: ./hw4runscript SPEC mcf LRU
+./build/opt/zsim configs/hw4/LRU/mcf.cfg > outputs/hw4/LRU/mcf/mcf.log 2>&1
+Wed Mar 12 20:03:44 CDT 2025 - Finished: ./hw4runscript SPEC mcf LRU
+Wed Mar 12 20:03:44 CDT 2025 - Executing: ./hw4runscript SPEC mcf LFU
+./build/opt/zsim configs/hw4/LFU/mcf.cfg > outputs/hw4/LFU/mcf/mcf.log 2>&1
+Wed Mar 12 20:10:04 CDT 2025 - Finished: ./hw4runscript SPEC mcf LFU
+Wed Mar 12 20:10:04 CDT 2025 - Executing: ./hw4runscript SPEC hmmer LRU
+./build/opt/zsim configs/hw4/LRU/hmmer.cfg > outputs/hw4/LRU/hmmer/hmmer.log 2>&1
+Wed Mar 12 20:56:09 CDT 2025 - Finished: ./hw4runscript SPEC hmmer LRU
+Wed Mar 12 20:56:09 CDT 2025 - Executing: ./hw4runscript SPEC hmmer LFU
+./build/opt/zsim configs/hw4/LFU/hmmer.cfg > outputs/hw4/LFU/hmmer/hmmer.log 2>&1
+Wed Mar 12 21:42:11 CDT 2025 - Finished: ./hw4runscript SPEC hmmer LFU
+Wed Mar 12 21:42:11 CDT 2025 - Executing: ./hw4runscript SPEC sjeng LRU
+./build/opt/zsim configs/hw4/LRU/sjeng.cfg > outputs/hw4/LRU/sjeng/sjeng.log 2>&1
+Wed Mar 12 22:21:30 CDT 2025 - Finished: ./hw4runscript SPEC sjeng LRU
+Wed Mar 12 22:21:30 CDT 2025 - Executing: ./hw4runscript SPEC sjeng LFU
+./build/opt/zsim configs/hw4/LFU/sjeng.cfg > outputs/hw4/LFU/sjeng/sjeng.log 2>&1
+Wed Mar 12 23:00:51 CDT 2025 - Finished: ./hw4runscript SPEC sjeng LFU
+Wed Mar 12 23:00:51 CDT 2025 - Executing: ./hw4runscript SPEC libquantum LRU
+./build/opt/zsim configs/hw4/LRU/libquantum.cfg > outputs/hw4/LRU/libquantum/libquantum.log 2>&1
+Thu Mar 13 00:02:09 CDT 2025 - Finished: ./hw4runscript SPEC libquantum LRU
+Thu Mar 13 00:02:09 CDT 2025 - Executing: ./hw4runscript SPEC libquantum LFU
+./build/opt/zsim configs/hw4/LFU/libquantum.cfg > outputs/hw4/LFU/libquantum/libquantum.log 2>&1
+Thu Mar 13 01:03:27 CDT 2025 - Finished: ./hw4runscript SPEC libquantum LFU
+Thu Mar 13 01:03:27 CDT 2025 - Executing: ./hw4runscript SPEC xalancbmk LRU
+./build/opt/zsim configs/hw4/LRU/xalancbmk.cfg > outputs/hw4/LRU/xalancbmk/xalancbmk.log 2>&1
+Thu Mar 13 01:03:27 CDT 2025 - Finished: ./hw4runscript SPEC xalancbmk LRU
+Thu Mar 13 01:03:27 CDT 2025 - Executing: ./hw4runscript SPEC xalancbmk LFU
+./build/opt/zsim configs/hw4/LFU/xalancbmk.cfg > outputs/hw4/LFU/xalancbmk/xalancbmk.log 2>&1
+Thu Mar 13 01:03:27 CDT 2025 - Finished: ./hw4runscript SPEC xalancbmk LFU
+Thu Mar 13 01:03:27 CDT 2025 - Executing: ./hw4runscript SPEC milc LRU
+./build/opt/zsim configs/hw4/LRU/milc.cfg > outputs/hw4/LRU/milc/milc.log 2>&1
+Thu Mar 13 01:03:27 CDT 2025 - Finished: ./hw4runscript SPEC milc LRU
+Thu Mar 13 01:03:27 CDT 2025 - Executing: ./hw4runscript SPEC milc LFU
+./build/opt/zsim configs/hw4/LFU/milc.cfg > outputs/hw4/LFU/milc/milc.log 2>&1
+Thu Mar 13 01:03:27 CDT 2025 - Finished: ./hw4runscript SPEC milc LFU
+Thu Mar 13 01:03:27 CDT 2025 - Executing: ./hw4runscript SPEC cactusADM LRU
+./build/opt/zsim configs/hw4/LRU/cactusADM.cfg > outputs/hw4/LRU/cactusADM/cactusADM.log 2>&1
+Thu Mar 13 01:50:29 CDT 2025 - Finished: ./hw4runscript SPEC cactusADM LRU
+Thu Mar 13 01:50:29 CDT 2025 - Executing: ./hw4runscript SPEC cactusADM LFU
+./build/opt/zsim configs/hw4/LFU/cactusADM.cfg > outputs/hw4/LFU/cactusADM/cactusADM.log 2>&1
+Thu Mar 13 02:37:42 CDT 2025 - Finished: ./hw4runscript SPEC cactusADM LFU
+Thu Mar 13 02:37:42 CDT 2025 - Executing: ./hw4runscript SPEC leslie3d LRU
+./build/opt/zsim configs/hw4/LRU/leslie3d.cfg > outputs/hw4/LRU/leslie3d/leslie3d.log 2>&1
+Thu Mar 13 02:37:42 CDT 2025 - Finished: ./hw4runscript SPEC leslie3d LRU
+Thu Mar 13 02:37:42 CDT 2025 - Executing: ./hw4runscript SPEC leslie3d LFU
+./build/opt/zsim configs/hw4/LFU/leslie3d.cfg > outputs/hw4/LFU/leslie3d/leslie3d.log 2>&1
+Thu Mar 13 02:37:42 CDT 2025 - Finished: ./hw4runscript SPEC leslie3d LFU
+Thu Mar 13 02:37:42 CDT 2025 - Executing: ./hw4runscript SPEC namd LRU
+./build/opt/zsim configs/hw4/LRU/namd.cfg > outputs/hw4/LRU/namd/namd.log 2>&1
+Thu Mar 13 02:37:54 CDT 2025 - Finished: ./hw4runscript SPEC namd LRU
+Thu Mar 13 02:37:54 CDT 2025 - Executing: ./hw4runscript SPEC namd LFU
+./build/opt/zsim configs/hw4/LFU/namd.cfg > outputs/hw4/LFU/namd/namd.log 2>&1
+Thu Mar 13 02:38:06 CDT 2025 - Finished: ./hw4runscript SPEC namd LFU
+Thu Mar 13 02:38:06 CDT 2025 - Executing: ./hw4runscript SPEC soplex LRU
+./build/opt/zsim configs/hw4/LRU/soplex.cfg > outputs/hw4/LRU/soplex/soplex.log 2>&1
+Thu Mar 13 03:01:57 CDT 2025 - Finished: ./hw4runscript SPEC soplex LRU
+Thu Mar 13 03:01:57 CDT 2025 - Executing: ./hw4runscript SPEC soplex LFU
+./build/opt/zsim configs/hw4/LFU/soplex.cfg > outputs/hw4/LFU/soplex/soplex.log 2>&1
+Thu Mar 13 03:25:46 CDT 2025 - Finished: ./hw4runscript SPEC soplex LFU
+Thu Mar 13 03:25:46 CDT 2025 - Executing: ./hw4runscript SPEC calculix LRU
+./build/opt/zsim configs/hw4/LRU/calculix.cfg > outputs/hw4/LRU/calculix/calculix.log 2>&1
+Thu Mar 13 04:24:18 CDT 2025 - Finished: ./hw4runscript SPEC calculix LRU
+Thu Mar 13 04:24:18 CDT 2025 - Executing: ./hw4runscript SPEC calculix LFU
+./build/opt/zsim configs/hw4/LFU/calculix.cfg > outputs/hw4/LFU/calculix/calculix.log 2>&1
+Thu Mar 13 05:22:50 CDT 2025 - Finished: ./hw4runscript SPEC calculix LFU
+Thu Mar 13 05:22:50 CDT 2025 - Executing: ./hw4runscript SPEC lbm LRU
+./build/opt/zsim configs/hw4/LRU/lbm.cfg > outputs/hw4/LRU/lbm/lbm.log 2>&1
+Thu Mar 13 05:34:55 CDT 2025 - Finished: ./hw4runscript SPEC lbm LRU
+Thu Mar 13 05:34:55 CDT 2025 - Executing: ./hw4runscript SPEC lbm LFU
+./build/opt/zsim configs/hw4/LFU/lbm.cfg > outputs/hw4/LFU/lbm/lbm.log 2>&1
+Thu Mar 13 05:46:59 CDT 2025 - Finished: ./hw4runscript SPEC lbm LFU
+Thu Mar 13 05:46:59 CDT 2025 - Script finished successfully
+Thu Mar 13 16:04:15 CDT 2025 - Script started
+Thu Mar 13 16:04:15 CDT 2025 - Executing: ./hw4runscript SPEC xalan LRU
+./build/opt/zsim configs/hw4/LRU/xalan.cfg > outputs/hw4/LRU/xalan/xalan.log 2>&1
+Thu Mar 13 16:50:08 CDT 2025 - Finished: ./hw4runscript SPEC xalan LRU
+Thu Mar 13 16:50:08 CDT 2025 - Executing: ./hw4runscript SPEC xalan LFU
+./build/opt/zsim configs/hw4/LFU/xalan.cfg > outputs/hw4/LFU/xalan/xalan.log 2>&1
+Thu Mar 13 17:35:46 CDT 2025 - Finished: ./hw4runscript SPEC xalan LFU
+Thu Mar 13 17:35:46 CDT 2025 - Script finished successfully
+Sat Mar 29 15:59:34 CDT 2025 - Script started
+Sat Mar 29 15:59:34 CDT 2025 - Executing: ./hw4runscript PARSEC blackscholes SRRIP
+./build/opt/zsim configs/hw4/SRRIP/blackscholes_8c_simlarge.cfg > outputs/hw4/SRRIP/blackscholes_8c_simlarge/blackscholes.log 2>&1
+Sat Mar 29 16:00:28 CDT 2025 - Finished: ./hw4runscript PARSEC blackscholes SRRIP
+Sat Mar 29 16:00:28 CDT 2025 - Executing: ./hw4runscript PARSEC bodytrack SRRIP
+./build/opt/zsim configs/hw4/SRRIP/bodytrack_8c_simlarge.cfg > outputs/hw4/SRRIP/bodytrack_8c_simlarge/bodytrack.log 2>&1
+Sat Mar 29 16:03:29 CDT 2025 - Finished: ./hw4runscript PARSEC bodytrack SRRIP
+Sat Mar 29 16:03:29 CDT 2025 - Executing: ./hw4runscript PARSEC canneal SRRIP
+./build/opt/zsim configs/hw4/SRRIP/canneal_8c_simlarge.cfg > outputs/hw4/SRRIP/canneal_8c_simlarge/canneal.log 2>&1
+Sat Mar 29 16:05:15 CDT 2025 - Finished: ./hw4runscript PARSEC canneal SRRIP
+Sat Mar 29 16:05:15 CDT 2025 - Executing: ./hw4runscript PARSEC fluidanimate SRRIP
+./build/opt/zsim configs/hw4/SRRIP/fluidanimate_8c_simlarge.cfg > outputs/hw4/SRRIP/fluidanimate_8c_simlarge/fluidanimate.log 2>&1
+Sat Mar 29 16:06:29 CDT 2025 - Finished: ./hw4runscript PARSEC fluidanimate SRRIP
+Sat Mar 29 16:06:29 CDT 2025 - Executing: ./hw4runscript PARSEC freqmine SRRIP
+./build/opt/zsim configs/hw4/SRRIP/freqmine_8c_simlarge.cfg > outputs/hw4/SRRIP/freqmine_8c_simlarge/freqmine.log 2>&1
+Sat Mar 29 16:06:31 CDT 2025 - Finished: ./hw4runscript PARSEC freqmine SRRIP
+Sat Mar 29 16:06:31 CDT 2025 - Executing: ./hw4runscript PARSEC streamcluster SRRIP
+./build/opt/zsim configs/hw4/SRRIP/streamcluster_8c_simlarge.cfg > outputs/hw4/SRRIP/streamcluster_8c_simlarge/streamcluster.log 2>&1
+Sat Mar 29 16:08:26 CDT 2025 - Finished: ./hw4runscript PARSEC streamcluster SRRIP
+Sat Mar 29 16:08:26 CDT 2025 - Executing: ./hw4runscript PARSEC swaptions SRRIP
+./build/opt/zsim configs/hw4/SRRIP/swaptions_8c_simlarge.cfg > outputs/hw4/SRRIP/swaptions_8c_simlarge/swaptions.log 2>&1
+Sat Mar 29 16:09:21 CDT 2025 - Finished: ./hw4runscript PARSEC swaptions SRRIP
+Sat Mar 29 16:09:21 CDT 2025 - Executing: ./hw4runscript PARSEC x264 SRRIP
+./build/opt/zsim configs/hw4/SRRIP/x264_8c_simlarge.cfg > outputs/hw4/SRRIP/x264_8c_simlarge/x264.log 2>&1
+Sat Mar 29 16:12:42 CDT 2025 - Finished: ./hw4runscript PARSEC x264 SRRIP
+Sat Mar 29 16:12:42 CDT 2025 - Executing: ./hw4runscript SPEC bzip2 SRRIP
+./build/opt/zsim configs/hw4/SRRIP/bzip2.cfg > outputs/hw4/SRRIP/bzip2/bzip2.log 2>&1
+Sat Mar 29 16:13:36 CDT 2025 - Finished: ./hw4runscript SPEC bzip2 SRRIP
+Sat Mar 29 16:13:36 CDT 2025 - Executing: ./hw4runscript SPEC gcc SRRIP
+./build/opt/zsim configs/hw4/SRRIP/gcc.cfg > outputs/hw4/SRRIP/gcc/gcc.log 2>&1
+Sat Mar 29 16:22:03 CDT 2025 - Finished: ./hw4runscript SPEC gcc SRRIP
+Sat Mar 29 16:22:03 CDT 2025 - Executing: ./hw4runscript SPEC mcf SRRIP
+./build/opt/zsim configs/hw4/SRRIP/mcf.cfg > outputs/hw4/SRRIP/mcf/mcf.log 2>&1
+Sat Mar 29 16:29:17 CDT 2025 - Finished: ./hw4runscript SPEC mcf SRRIP
+Sat Mar 29 16:29:17 CDT 2025 - Executing: ./hw4runscript SPEC hmmer SRRIP
+./build/opt/zsim configs/hw4/SRRIP/hmmer.cfg > outputs/hw4/SRRIP/hmmer/hmmer.log 2>&1
+Sat Mar 29 17:14:50 CDT 2025 - Finished: ./hw4runscript SPEC hmmer SRRIP
+Sat Mar 29 17:14:50 CDT 2025 - Executing: ./hw4runscript SPEC sjeng SRRIP
+./build/opt/zsim configs/hw4/SRRIP/sjeng.cfg > outputs/hw4/SRRIP/sjeng/sjeng.log 2>&1
+Sat Mar 29 17:54:27 CDT 2025 - Finished: ./hw4runscript SPEC sjeng SRRIP
+Sat Mar 29 17:54:27 CDT 2025 - Executing: ./hw4runscript SPEC libquantum SRRIP
+./build/opt/zsim configs/hw4/SRRIP/libquantum.cfg > outputs/hw4/SRRIP/libquantum/libquantum.log 2>&1
+Sat Mar 29 18:56:32 CDT 2025 - Finished: ./hw4runscript SPEC libquantum SRRIP
+Sat Mar 29 18:56:32 CDT 2025 - Executing: ./hw4runscript SPEC xalan SRRIP
+./build/opt/zsim configs/hw4/SRRIP/xalan.cfg > outputs/hw4/SRRIP/xalan/xalan.log 2>&1
+Sat Mar 29 19:42:56 CDT 2025 - Finished: ./hw4runscript SPEC xalan SRRIP
+Sat Mar 29 19:42:56 CDT 2025 - Executing: ./hw4runscript SPEC cactusADM SRRIP
+./build/opt/zsim configs/hw4/SRRIP/cactusADM.cfg > outputs/hw4/SRRIP/cactusADM/cactusADM.log 2>&1
+Sat Mar 29 20:30:39 CDT 2025 - Finished: ./hw4runscript SPEC cactusADM SRRIP
+Sat Mar 29 20:30:39 CDT 2025 - Executing: ./hw4runscript SPEC namd SRRIP
+./build/opt/zsim configs/hw4/SRRIP/namd.cfg > outputs/hw4/SRRIP/namd/namd.log 2>&1
+Sat Mar 29 20:30:51 CDT 2025 - Finished: ./hw4runscript SPEC namd SRRIP
+Sat Mar 29 20:30:51 CDT 2025 - Executing: ./hw4runscript SPEC soplex SRRIP
+./build/opt/zsim configs/hw4/SRRIP/soplex.cfg > outputs/hw4/SRRIP/soplex/soplex.log 2>&1
+Sat Mar 29 20:55:56 CDT 2025 - Finished: ./hw4runscript SPEC soplex SRRIP
+Sat Mar 29 20:55:56 CDT 2025 - Executing: ./hw4runscript SPEC calculix SRRIP
+./build/opt/zsim configs/hw4/SRRIP/calculix.cfg > outputs/hw4/SRRIP/calculix/calculix.log 2>&1
+Sat Mar 29 21:55:32 CDT 2025 - Finished: ./hw4runscript SPEC calculix SRRIP
+Sat Mar 29 21:55:32 CDT 2025 - Executing: ./hw4runscript SPEC lbm SRRIP
+./build/opt/zsim configs/hw4/SRRIP/lbm.cfg > outputs/hw4/SRRIP/lbm/lbm.log 2>&1
+Sat Mar 29 22:07:26 CDT 2025 - Finished: ./hw4runscript SPEC lbm SRRIP
+Sat Mar 29 22:07:26 CDT 2025 - Script finished successfully
+Sun Mar 30 00:41:32 CDT 2025 - Script started
+Sun Mar 30 00:41:32 CDT 2025 - Executing: ./hw4runscript PARSEC blackscholes SRRIP
+./build/opt/zsim configs/hw4/SRRIP/blackscholes_8c_simlarge.cfg > outputs/hw4/SRRIP/blackscholes_8c_simlarge/blackscholes.log 2>&1
+Sun Mar 30 00:42:31 CDT 2025 - Finished: ./hw4runscript PARSEC blackscholes SRRIP
+Sun Mar 30 00:42:31 CDT 2025 - Executing: ./hw4runscript PARSEC bodytrack SRRIP
+./build/opt/zsim configs/hw4/SRRIP/bodytrack_8c_simlarge.cfg > outputs/hw4/SRRIP/bodytrack_8c_simlarge/bodytrack.log 2>&1
+Sun Mar 30 00:44:13 CDT 2025 - Received termination signal. Exiting script.
