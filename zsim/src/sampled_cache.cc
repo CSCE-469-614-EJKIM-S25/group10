@@ -29,3 +29,32 @@ void SampledCache::access(uint64_t block_address, uint16_t pc_sig, bool& hit, ui
         }
     }
 }
+void SampledCache::update(uint64_t block_address, uint16_t pc_sig) {
+    uint16_t index = hash_set_index(block_address);
+    uint16_t block_tag = hash_block(block_address);
+    uint8_t& ts = timestamps[index / SETS_PER_SUBCACHE];
+    ts++;  // increase timestamp on every access to this set
+
+    auto& set = cache[index];
+
+    // Try to find an invalid (empty) entry
+    auto it = std::find_if(set.begin(), set.end(), [](const SampledCacheEntry& e) {
+        return !e.valid;
+    });
+
+    // If all are valid, pick LRU (smallest timestamp)
+    if (it == set.end()) {
+        it = std::min_element(set.begin(), set.end(), [](const SampledCacheEntry& a, const SampledCacheEntry& b) {
+            return a.timestamp < b.timestamp;
+        });
+    }
+
+    // Insert or replace entry
+    *it = {
+        true,       // valid
+        block_tag,  // block address hash
+        pc_sig,     // PC signature
+        ts          // current timestamp
+    };
+}
+
