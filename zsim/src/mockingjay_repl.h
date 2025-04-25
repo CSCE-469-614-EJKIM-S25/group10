@@ -14,13 +14,61 @@ class MockingjayReplPolicy : public ReplPolicy {
         uint32_t llc_ways; //number of ways
         uint32_t lineSize;
 
-        int * etr; //etr counters for all cache lines
-        int * etr_clock;
-
         int INF_ETR = 127; //etr value for percieved scans
         int MAX_RD = 104; //etr threshold for non-scan values
         int GRANULARITY = 8; //how many accesses before decrementing etr's
 
+        static constexpr int NUM_SAMPLED_SETS = 512;
+        static constexpr int NUM_SAMPLED_WAYS = 5;
+        static constexpr int kTimestampBits = 8;
+        static constexpr int kMaxTimestamp = 1 << kTimestampBits;
+
+        int * etr; //etr counters for all cache lines
+        int * etr_clock;
+
+        struct SampledCacheLine {
+          bool valid;
+          uint64_t tag;
+          uint64_t last_pc_signature;
+          int timestamp;
+        };
+
+        SampledCacheLine sampledCacheEntries[NUM_SAMPLED_SETS][NUM_SAMPLED_WAYS];
+
+        int findInSampledCache(uint64_t tag, uint32_t setIndex) {
+          for (int i = 0; i < NUM_SAMPLED_WAYS; ++i) {
+              if (sampledCacheEntries[setIndex][i].valid && sampledCacheEntries[setIndex][i].tag == tag) {
+                  return i;
+              }
+          }
+          return -1; // not found
+        }
+
+        // Update timestamp with wrap-around behavior
+        inline int updateTimestamp(int current) { return (current + 1) % kMaxTimestamp; }
+
+        // Compute reuse interval considering wrap-around
+        inline int computeElapsedTime(int recent, int previous) {
+          if (recent >= previous) { return recent - previous; } 
+          else { return (recent + kMaxTimestamp) - previous; }
+        }
+
+        int findLRUOrInvalid(uint32_t setIndex) {
+          int lruWay = 0;
+          int oldestTs = INT32_MAX;
+      
+          for (int i = 0; i < NUM_SAMPLED_WAYS; ++i) {
+              auto& entry = sampledCacheEntries[setIndex][i];
+              if (!entry.valid) return i; // use invalid immediately
+      
+              if (entry.timestamp < oldestTs) {
+                  oldestTs = entry.timestamp;
+                  lruWay = i;
+              }
+          }
+          return lruWay;
+        }
+        
     public:
         //we may want to change this
         explicit MockingjayReplPolicy(uint32_t _numLines, uint32_t _numWays, uint32_t _lineSize) : numLines(_numLines), llc_ways(_numWays), lineSize(_lineSize) {

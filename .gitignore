@@ -2,3 +2,6 @@ benchmarks/
 single-benchmark.zip
 *.pyc
 py_venv/
+zsim/.vscode
+.DS_Store
+zsim/.DS_Store
