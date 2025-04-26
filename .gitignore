@@ -5,3 +5,4 @@ py_venv/
 zsim/.vscode
 .DS_Store
 zsim/.DS_Store
+zsim/src/.vscode/

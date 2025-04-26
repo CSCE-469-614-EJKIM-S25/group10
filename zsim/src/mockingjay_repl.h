@@ -140,22 +140,6 @@ class MockingjayReplPolicy : public ReplPolicy {
           if (recent >= previous) { return recent - previous; } 
           else { return (recent + kMaxTimestamp) - previous; }
         }
-        
-        int findLRUOrInvalid(uint32_t setIndex) {
-          int lruWay = 0;
-          int oldestTs = INT32_MAX;
-      
-          for (int i = 0; i < NUM_SAMPLED_WAYS; ++i) {
-              auto& entry = sampledCacheEntries[setIndex][i];
-              if (!entry.valid) return i; // use invalid immediately
-      
-              if (entry.timestamp < oldestTs) {
-                  oldestTs = entry.timestamp;
-                  lruWay = i;
-              }
-          }
-          return lruWay;
-        }
 
     public:
         //we may want to change this
@@ -182,34 +166,108 @@ class MockingjayReplPolicy : public ReplPolicy {
         }
         
         // add member methods here, refer to repl_policies.h
-        void update(uint32_t id, const MemReq* req) {
-          //update values if accesses = GRANULARITY
+        void update(uint32_t id, const MemReq* req) { // id is the SPECIFIC LINE we need to access (a WAY of a set)
+          if (req->type == PUTS || req->type == PUTX){ etr[id] = -INF_ETR; } // writeback special case
+
+          bool hit = (req->type == GETS || req->type == GETX);
+          bool prefetch = req->is(MemReq::PREFETCH);
+          uint32_t cpu = req->srcId; // the CPU that requested this
+          pc = get_pc_signature(req->pc, hit, prefetch, cpu);
+
           int set = (id/llc_ways); //size of etr array is sets*ways, effectively getting bits for set here
+
+          if (is_sampled_set(set)){
+            uint32_t sampled_cache_index = get_sampled_cache_index(req->lineAddr);
+            uint64_t sampled_cache_tag = get_sampled_cache_tag(req->lineAddr);
+            int sampled_cache_way = findInSampledCache(sampled_cache_tag, sampled_cache_index);
+    
+            if (sampled_cache_way > -1){ // it exists in the sampled cache and we should update RDP
+              uint64_t last_signature = sampledCacheEntries[sampled_cache_index][sampled_cache_way].last_pc_signature;
+              uint64_t last_timestamp = sampledCacheEntries[sampled_cache_index][sampled_cache_way].timestamp;
+              int sample = computeElapsedTime(current_timestamp[set], last_timestamp);
+
+              if (sample <= INF_RD){
+                if (prefetch) { sample *= FLEXMIN_PENALTY; }
+                if (rdp.count(last_signature)){
+                  int init = rdp.at(last_signature);
+                  rdp.at(last_signature) = temporal_difference(init, sample);
+                }
+                else{ rdp[last_signature] = sample; }
+
+                sampled_cache[sampled_cache_index][sampled_cache_way].valid = false; // setting up so that detrain skips this entry
+              }
+            }
+
+            int lruWay = -1;
+            int lru_rd = -1;
+            for (int i = 0; i < NUM_SAMPLED_WAYS; ++i) {
+              auto& entry = sampledCacheEntries[sampled_cache_index][i];
+              if (!entry.valid){
+                lru_way = w;
+                lru_rd = INF_RD + 1;
+                continue;  
+              }
+
+              uint64_t last_timestamp = entry.timestamp;
+              int sample = time_elapsed(current_timestamp[set], last_timestamp);
+              if (sample > INF_RD){
+                lru_way = i;
+                lru_rd = INF_RD + 1;
+                detrain(sampled_cache_index, i); // we are seeing this as a SCAN ACCESS so don't involve it in RDP
+              }
+              else if (sample > lru_rd){
+                lru_way = i;
+                lru_rd = sample;
+              }
+            }
+            detrain(sampled_cache_index, lru_way);
+
+            for (int w = 0; w < NUM_SAMPLED_WAYS; w++) {
+              if (sampledCacheEntries[sampled_cache_index][w].valid == false){
+                sampledCacheEntries[sampled_cache_index][w].valid = true;
+                sampledCacheEntries[sampled_cache_index][w].signature = pc;
+                sampledCacheEntries[sampled_cache_index][w].tag = sampled_cache_tag;
+                sampledCacheEntries[sampled_cache_index][w].timestamp = current_timestamp[set];
+                break; // SO ONLY UPDATE THE FIRST WAY THAT HAS AN INVALID TAG (not sure why)
+              }
+            }
+            current_timestamp[set] = increment_timestamp(current_timestamp[set]);
+          }
+
+          //update values if accesses = GRANULARITY
           if(etr_clock[set] == GRANULARITY){
             uint32_t start = (id/llc_ways)*llc_ways; //id of first element in set (used integer devision to round down to multiple of ways)
             //loop through set and decrement
             for(int i = start; i < (start + llc_ways); i++){
-              etr[i]--;
+              if ((uint32_t) i != id && abs(etr[i]) < INF_ETR){ etr[i]--; }
             }
             etr_clock[set] = 0;
           }
           else{
             etr_clock[set]++;
           }
+
+          if (id < llc_ways){
+            if(!rdp.count(pc)){
+              if (numCores == 1) { etr[id] = 0; }
+              else{ etr[id] = INF_ETR; }
+            }
+            else{ // there IS an entry for this PC in the RDP
+                if(rdp.at(pc) > MAX_RD) { etr[id] = INF_ETR; } // this entry has CROSSED the treshold FOR NON-SCAN-iness -- we treat it as junk
+                else{ etr[id] = rdp.at(pc) / GRANULARITY; }
+            }
+          }
         }
         
-        void replaced(uint32_t id) {
-          //mark as a miss
-        }
+        void replaced(uint32_t id) { etr[id = 0]; }
         
         //find victim from set
         template <typename C> inline uint32_t rank(const MemReq* req, C cands) {
-          
-          
-          
-          
-          
-          
+          /* IF A LINE IS INVALID WE CAN JUST EVICT THAT */
+          for(auto ci = cands.begin(); ci != cands.end(); ci++){
+            if (!cc->isValid(*ci)){ return *ci; } // cc is coherence controller and it will specify if the line is valid or not
+          }
+
           int max_etr = 0;
           int victim_loc = 0;
           for(auto ci = cands.begin(); ci != cands.end(); ci++){
@@ -218,9 +276,11 @@ class MockingjayReplPolicy : public ReplPolicy {
               max_etr = abs(etr[*ci]);
             }
           }
-
-          //may need prefetching logic here
-
+          
+          uint64_t pc_signature = get_pc_signature(req->pc, false, req->is(MemReq::PREFETCH), req->srcId);
+          bool writeback = req->type == PUTS || req->type == PUTX;
+          if (!writeback && rdp.count(pc_signature) && (rdp.at(pc_signature) > MAX_RD || rdp.at(pc_signature) / GRANULARITY > max_etr)){ return llc_ways; }
+          
           return victim_loc;
         }
         DECL_RANK_BINDINGS;
