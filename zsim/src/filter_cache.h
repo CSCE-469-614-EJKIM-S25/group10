@@ -111,7 +111,7 @@ class FilterCache : public Cache {
             }
         }
 
-        inline uint64_t store(Address vAddr, uint64_t curCycle) {
+        inline uint64_t store(Address vAddr, uint64_t curCycle, Address pc) {
             Address vLineAddr = vAddr >> lineBits;
             uint32_t idx = vLineAddr & setMask;
             uint64_t availCycle = filterArray[idx].availCycle; //read before, careful with ordering to avoid timing races
