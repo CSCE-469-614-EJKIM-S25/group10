@@ -173,10 +173,9 @@ BaseCache* BuildCacheBank(Config& config, const string& prefix, g_string& name, 
         // add your SRRIP construction code here
     } else if(replType == "Mockingjay"){
         //initialize mockingjay stuff here
-        rp = new MockingjayReplPolicy(numLines, ways, lineSize, zinfo->numCores)
+        rp = new MockingjayReplPolicy(numLines, ways, lineSize, zinfo->numCores);
     } else if (replType == "WayPart" || replType == "Vantage" || replType == "IdealLRUPart") {
         if (replType == "WayPart" && arrayType != "SetAssoc") panic("WayPart replacement requires SetAssoc array");
-
         //Partition mapper
         // TODO: One partition mapper per cache (not bank).
         string partMapper = config.get<const char*>(prefix + "repl.partMapper", "Core");

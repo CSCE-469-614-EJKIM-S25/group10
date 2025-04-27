@@ -2,6 +2,7 @@
     "files.associations": {
         "bitset": "cpp",
         "set": "cpp",
-        "cmath": "cpp"
+        "cmath": "cpp",
+        "sampled_cache": "cpp"
     }
 }

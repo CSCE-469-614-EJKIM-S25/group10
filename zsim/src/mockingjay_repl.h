@@ -23,7 +23,7 @@ class MockingjayReplPolicy : public ReplPolicy {
         uint32_t LOG2_LLC_SIZE;
 
         uint32_t SAMPLED_CACHE_TAG_BITS;
-        unit32_t PC_SIGNATURE_BITS;
+        uint32_t PC_SIGNATURE_BITS;
 
         static constexpr int NUM_SAMPLED_SETS = 512;
         static constexpr int NUM_SAMPLED_WAYS = 5;
@@ -32,7 +32,7 @@ class MockingjayReplPolicy : public ReplPolicy {
         static constexpr int kTimestampBits = 8;
         static constexpr int kMaxTimestamp = 1 << kTimestampBits;
 
-        constexpr double TEMP_DIFFERENCE = 1.0/16.0;
+        static constexpr double TEMP_DIFFERENCE = 1.0/16.0;
         double FLEXMIN_PENALTY; // for prefetching
 
         int INF_ETR = 15;
@@ -120,7 +120,7 @@ class MockingjayReplPolicy : public ReplPolicy {
 
           if (rdp.count(temp.last_pc_signature)){ rdp.at(temp.last_pc_signature) = min(rdp.at(temp.last_pc_signature) + 1, INF_RD); } 
           else{ rdp[temp.last_pc_signature] = INF_RD; } // signature is not an index in the map -- add a new entry
-          sampled_cache[set][way].valid = false;
+          sampledCacheEntries[set][way].valid = false;
         }
 
         int temporal_difference(int init, int sample) {
@@ -157,6 +157,12 @@ class MockingjayReplPolicy : public ReplPolicy {
             etr = gm_calloc<int>(numLines);
             etr_clock = gm_calloc<int>(numLines/llc_ways); //counter for amount of accesses to that set
             current_timestamp = gm_calloc<int>(numLines/llc_ways); // stores the most recent accessed timestamp per set
+
+            for(int i = 0; i < numLines/llc_ways; i++) {
+              etr_clock[i] = GRANULARITY;
+              current_timestamp[i] = 0;
+            }
+
         }
         
         ~MockingjayReplPolicy() {
@@ -172,7 +178,7 @@ class MockingjayReplPolicy : public ReplPolicy {
           bool hit = (req->type == GETS || req->type == GETX);
           bool prefetch = req->is(MemReq::PREFETCH);
           uint32_t cpu = req->srcId; // the CPU that requested this
-          pc = get_pc_signature(req->pc, hit, prefetch, cpu);
+          uint32_t pc = get_pc_signature(req->pc, hit, prefetch, cpu);
 
           int set = (id/llc_ways); //size of etr array is sets*ways, effectively getting bits for set here
 
@@ -194,7 +200,7 @@ class MockingjayReplPolicy : public ReplPolicy {
                 }
                 else{ rdp[last_signature] = sample; }
 
-                sampled_cache[sampled_cache_index][sampled_cache_way].valid = false; // setting up so that detrain skips this entry
+                sampledCacheEntries[sampled_cache_index][sampled_cache_way].valid = false; // setting up so that detrain skips this entry
               }
             }
 
@@ -203,35 +209,35 @@ class MockingjayReplPolicy : public ReplPolicy {
             for (int i = 0; i < NUM_SAMPLED_WAYS; ++i) {
               auto& entry = sampledCacheEntries[sampled_cache_index][i];
               if (!entry.valid){
-                lru_way = w;
+                lruWay = i;
                 lru_rd = INF_RD + 1;
                 continue;  
               }
 
               uint64_t last_timestamp = entry.timestamp;
-              int sample = time_elapsed(current_timestamp[set], last_timestamp);
+              int sample = computeElapsedTime(current_timestamp[set], last_timestamp);
               if (sample > INF_RD){
-                lru_way = i;
+                lruWay = i;
                 lru_rd = INF_RD + 1;
                 detrain(sampled_cache_index, i); // we are seeing this as a SCAN ACCESS so don't involve it in RDP
               }
               else if (sample > lru_rd){
-                lru_way = i;
+                lruWay = i;
                 lru_rd = sample;
               }
             }
-            detrain(sampled_cache_index, lru_way);
+            detrain(sampled_cache_index, lruWay);
 
             for (int w = 0; w < NUM_SAMPLED_WAYS; w++) {
               if (sampledCacheEntries[sampled_cache_index][w].valid == false){
                 sampledCacheEntries[sampled_cache_index][w].valid = true;
-                sampledCacheEntries[sampled_cache_index][w].signature = pc;
+                sampledCacheEntries[sampled_cache_index][w].last_pc_signature = pc;
                 sampledCacheEntries[sampled_cache_index][w].tag = sampled_cache_tag;
                 sampledCacheEntries[sampled_cache_index][w].timestamp = current_timestamp[set];
                 break; // SO ONLY UPDATE THE FIRST WAY THAT HAS AN INVALID TAG (not sure why)
               }
             }
-            current_timestamp[set] = increment_timestamp(current_timestamp[set]);
+            current_timestamp[set] = updateTimestamp(current_timestamp[set]);
           }
 
           //update values if accesses = GRANULARITY
