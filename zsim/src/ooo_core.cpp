@@ -505,8 +505,8 @@ void OOOCore::advance(uint64_t targetCycle) {
 
 // Pin interface code
 
-void OOOCore::LoadFunc(THREADID tid, ADDRINT addr, ADDRINT pc) {static_cast<OOOCore*>(cores[tid])->load(addr);}
-void OOOCore::StoreFunc(THREADID tid, ADDRINT addr, ADDRINT pc) {static_cast<OOOCore*>(cores[tid])->store(addr);}
+void OOOCore::LoadFunc(THREADID tid, ADDRINT addr, ADDRINT pc) {static_cast<OOOCore*>(cores[tid])->load(addr, pc);}
+void OOOCore::StoreFunc(THREADID tid, ADDRINT addr, ADDRINT pc) {static_cast<OOOCore*>(cores[tid])->store(addr, pc);}
 
 void OOOCore::PredLoadFunc(THREADID tid, ADDRINT addr, ADDRINT pc, BOOL pred) {
     OOOCore* core = static_cast<OOOCore*>(cores[tid]);
