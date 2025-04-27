@@ -188,6 +188,8 @@ class MockingjayReplPolicy : public ReplPolicy {
             int sampled_cache_way = findInSampledCache(sampled_cache_tag, sampled_cache_index);
     
             if (sampled_cache_way > -1){ // it exists in the sampled cache and we should update RDP
+              assert(sampled_cache_index < NUM_SAMPLED_SETS);
+              assert(sampled_cache_way < NUM_SAMPLED_WAYS);
               uint64_t last_signature = sampledCacheEntries[sampled_cache_index][sampled_cache_way].last_pc_signature;
               uint64_t last_timestamp = sampledCacheEntries[sampled_cache_index][sampled_cache_way].timestamp;
               int sample = computeElapsedTime(current_timestamp[set], last_timestamp);
