@@ -50,7 +50,7 @@ class MockingjayReplPolicy : public ReplPolicy {
           int timestamp;
         };
 
-        SampledCacheLine sampledCacheEntries[NUM_SAMPLED_SETS][NUM_SAMPLED_WAYS];
+        unordered_map<uint32_t, SampledCacheLine*> sampledCacheEntries;
 
         int * etr; //etr counters for all cache lines
         int * etr_clock;
@@ -161,6 +161,16 @@ class MockingjayReplPolicy : public ReplPolicy {
             for(uint32_t i = 0; i < numLines/llc_ways; i++) {
               etr_clock[i] = GRANULARITY;
               current_timestamp[i] = 0;
+            }
+
+            for(uint32_t set = 0; set < numLines/llc_ways; set++) {
+              if (is_sampled_set(set)) {
+                  int modifier = 1 << LOG2_LLC_SET;
+                  int limit = 1 << LOG2_SAMPLED_CACHE_SETS;
+                  for (int i = 0; i < limit; i++) {
+                      sampled_cache[set + modifier*i] = new SampledCacheLine[NUM_SAMPLED_WAYS]();
+                  }
+              }
             }
 
         }
