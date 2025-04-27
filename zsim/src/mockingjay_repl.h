@@ -158,7 +158,7 @@ class MockingjayReplPolicy : public ReplPolicy {
             etr_clock = gm_calloc<int>(numLines/llc_ways); //counter for amount of accesses to that set
             current_timestamp = gm_calloc<int>(numLines/llc_ways); // stores the most recent accessed timestamp per set
 
-            for(int i = 0; i < numLines/llc_ways; i++) {
+            for(uint32_t i = 0; i < numLines/llc_ways; i++) {
               etr_clock[i] = GRANULARITY;
               current_timestamp[i] = 0;
             }
