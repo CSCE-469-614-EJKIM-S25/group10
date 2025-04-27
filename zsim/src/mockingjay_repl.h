@@ -168,7 +168,7 @@ class MockingjayReplPolicy : public ReplPolicy {
                   int modifier = 1 << LOG2_LLC_SET;
                   int limit = 1 << LOG2_SAMPLED_CACHE_SETS;
                   for (int i = 0; i < limit; i++) {
-                      sampled_cache[set + modifier*i] = new SampledCacheLine[NUM_SAMPLED_WAYS]();
+                    sampledCacheEntries[set + modifier*i] = new SampledCacheLine[NUM_SAMPLED_WAYS]();
                   }
               }
             }
