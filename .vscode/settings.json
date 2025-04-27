@@ -3,6 +3,10 @@
         "bitset": "cpp",
         "set": "cpp",
         "cmath": "cpp",
-        "sampled_cache": "cpp"
+        "sampled_cache": "cpp",
+        "*.ph": "cpp",
+        "*.tcc": "cpp",
+        "string": "cpp",
+        "regex": "cpp"
     }
 }

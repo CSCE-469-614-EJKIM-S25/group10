@@ -100,7 +100,7 @@ class MockingjayReplPolicy : public ReplPolicy {
         }
       
         uint64_t get_sampled_cache_tag(uint64_t full_addr) {
-          full_addr = full_addr >> LOG2_LLC_SET + LOG2_BLOCK_SIZE + LOG2_SAMPLED_CACHE_SETS;
+          full_addr = full_addr >> (LOG2_LLC_SET + LOG2_BLOCK_SIZE + LOG2_SAMPLED_CACHE_SETS);
           full_addr = (full_addr << (64 - SAMPLED_CACHE_TAG_BITS)) >> (64 - SAMPLED_CACHE_TAG_BITS);
           return full_addr;
         }
