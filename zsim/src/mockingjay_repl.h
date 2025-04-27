@@ -284,7 +284,7 @@ class MockingjayReplPolicy : public ReplPolicy {
             if (!cc->isValid(*ci)){ return *ci; } // cc is coherence controller and it will specify if the line is valid or not
           }
 
-          int max_etr = 0;
+          int max_etr = -1;
           int victim_loc = 0;
           for(auto ci = cands.begin(); ci != cands.end(); ci.inc()){
             if(abs(etr[*ci]) > max_etr || (abs(etr[*ci]) == max_etr && etr[*ci] < 0)){
@@ -293,9 +293,9 @@ class MockingjayReplPolicy : public ReplPolicy {
             }
           }
           
-          uint64_t pc_signature = get_pc_signature(req->pc, false, req->is(MemReq::PREFETCH), req->srcId);
-          bool writeback = req->type == PUTS || req->type == PUTX;
-          if (!writeback && rdp.count(pc_signature) && (rdp.at(pc_signature) > MAX_RD || rdp.at(pc_signature) / GRANULARITY > max_etr)){ return llc_ways; }
+          // uint64_t pc_signature = get_pc_signature(req->pc, false, req->is(MemReq::PREFETCH), req->srcId);
+          // bool writeback = req->type == PUTS || req->type == PUTX;
+          // if (!writeback && rdp.count(pc_signature) && (rdp.at(pc_signature) > MAX_RD || rdp.at(pc_signature) / GRANULARITY > max_etr)){ return llc_ways; }
           
           return victim_loc;
         }
