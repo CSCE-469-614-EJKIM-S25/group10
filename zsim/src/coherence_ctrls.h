@@ -369,7 +369,7 @@ class MESICC : public CC {
                     bool lowerLevelWriteback = false;
                     //change directory info, invalidate other children if needed, tell requester about its state
                     respCycle = tcc->processAccess(req.lineAddr, lineId, req.type, req.childId, bcc->isExclusive(lineId), req.state,
-                            &lowerLevelWriteback, respCycle, req.srcId, flags);
+                            &lowerLevelWriteback, respCycle, req.srcId, flags, req.pc);
                     if (lowerLevelWriteback) {
                         //Essentially, if tcc induced a writeback, bcc may need to do an E->M transition to reflect that the cache now has dirty data
                         bcc->processWritebackOnAccess(req.lineAddr, lineId, req.type);
