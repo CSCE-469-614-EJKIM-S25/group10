@@ -244,7 +244,7 @@ class MockingjayReplPolicy : public ReplPolicy {
           if(etr_clock[set] == GRANULARITY){
             uint32_t start = (id/llc_ways)*llc_ways; //id of first element in set (used integer devision to round down to multiple of ways)
             //loop through set and decrement
-            for(int i = start; i < (start + llc_ways); i++){
+            for(uint32_t i = start; i < (start + llc_ways); i++){
               if ((uint32_t) i != id && abs(etr[i]) < INF_ETR){ etr[i]--; }
             }
             etr_clock[set] = 0;
@@ -265,18 +265,18 @@ class MockingjayReplPolicy : public ReplPolicy {
           }
         }
         
-        void replaced(uint32_t id) { etr[id = 0]; }
+        void replaced(uint32_t id) { etr[id] = 0; }
         
         //find victim from set
         template <typename C> inline uint32_t rank(const MemReq* req, C cands) {
           /* IF A LINE IS INVALID WE CAN JUST EVICT THAT */
-          for(auto ci = cands.begin(); ci != cands.end(); ci++){
+          for(auto ci = cands.begin(); ci != cands.end(); ci.inc()){
             if (!cc->isValid(*ci)){ return *ci; } // cc is coherence controller and it will specify if the line is valid or not
           }
 
           int max_etr = 0;
           int victim_loc = 0;
-          for(auto ci = cands.begin(); ci != cands.end(); ci++){
+          for(auto ci = cands.begin(); ci != cands.end(); ci.inc()){
             if(abs(etr[*ci]) > max_etr || (abs(etr[*ci]) == max_etr && etr[*ci] < 0)){
               victim_loc = *ci;
               max_etr = abs(etr[*ci]);
