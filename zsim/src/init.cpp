@@ -50,6 +50,7 @@
 #include "locks.h"
 #include "log.h"
 #include "mem_ctrls.h"
+#include "mockingjay_repl.h"
 #include "network.h"
 #include "null_core.h"
 #include "ooo_core.h"
