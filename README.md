@@ -34,13 +34,13 @@ A Python enviornment is required to be able to compile Zsim with any files added
 
 ## Instructions to Compile
 
-#### 1. Clone the repository into a desired location in your local system
-#### 2. Unzip benchmarks files
+#### 1. Clone the repository into the desired location in your local system
+#### 2. Unzip benchmarks files:
 ```
 zip -F benchmarks.zip --out single-benchmark.zip && unzip single-benchmark.zip && mkdir benchmarks/parsec-2.1/inputs/streamcluster
 ```
 #### 3. Environemnt setup
-- To set up the Python environment for the first time, run the following commands. These should be run in the root directory (group10/)
+- To set up the Python environment for the first time, run the following commands. These should be run in the top directory (group10/):
 
 ```
 python -m venv venv
@@ -48,18 +48,18 @@ source venv/bin/activate
 pip install scons
 ```
 
-- Everytime you want to build or run Zsim, you need to setup the environment variables first. These should also be run in group10/
+- Everytime you want to build or run Zsim, you need to setup the environment variables first. These should also be run in group10/:
 
 ```
-$ source venv/bin/activate
-$ source setup_env
+source venv/bin/activate
+source setup_env
 ```
 
-##### 4. Compile zsim
+#### 4. Compile zsim
 
 ```
-$ cd zsim
-$ scons -j4
+cd zsim
+scons -j4
 ```
 
 You need to compile the code each time you make a change.
@@ -73,8 +73,8 @@ We have made running the simulations an automatic process, enabling asynchronous
 <hr/>
 
 Before running the simulations, make two optional changes:
-- In group10/zsim/termProjectAutoRunScript.sh line 14, include all desired replacement policies in this format ("<policy_name_1>" "policy_name_2" .... "policy_name_n")
-- In group10/zsim/termProjectRunScript line 9, include all desired replacement policies in this format repl_policy: <policy_name_1> policy_name_2 .... policy_name_n"
+- In group10/zsim/termProjectAutoRunScript.sh line 14, include all desired replacement policies in this format ``("<policy_name_1>" "policy_name_2" .... "policy_name_n")``
+- In group10/zsim/termProjectRunScript line 9, include all desired replacement policies in this format ``repl_policy: <policy_name_1> policy_name_2 .... policy_name_n"``
 
 We have setup the scripts to run through simulations of Mockingjay, LRU, LFU, NRU, Rand, and SRRIP. The config files already exist as well.
 
