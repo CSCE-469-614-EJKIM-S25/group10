@@ -11,7 +11,7 @@ SUITES["SPEC"]="bzip2 gcc mcf hmmer sjeng libquantum xalan milc cactusADM leslie
 SUITES["PARSEC"]="blackscholes bodytrack canneal fluidanimate freqmine streamcluster swaptions x264"
 
 # Define replacement policies
-REPLACEMENT_POLICIES=("Mockingjay")
+REPLACEMENT_POLICIES=("NRU Rand")
 
 # Forbidden patterns
 FORBIDDEN_PATTERNS=(
