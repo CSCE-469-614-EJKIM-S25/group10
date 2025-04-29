@@ -2,7 +2,7 @@
 
 if [ "$#" -ne 3 ]; then
     echo ""
-    echo "Usage: ./MockingjayRunScript <suite> <benchmark> <repl_policy>"
+    echo "Usage: ./termProjectRunScript <suite> <benchmark> <repl_policy>"
     echo "    (suite) benchmarks: "
     echo "      -- (SPEC) bzip2 gcc mcf hmmer sjeng libquantum xalan milc cactusADM leslie3d namd soplex calculix lbm"
     echo "      -- (PARSEC) blackscholes bodytrack canneal dedup fluidanimate freqmine streamcluster swaptions x264"
