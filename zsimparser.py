@@ -8,7 +8,7 @@ matplotlib.use('Agg')
 
 #IMPORTANT: This must be run on linux
 directory = "./zsim/outputs"
-subdirs = ["/LRU", "/LFU", "/SRRIP", "/Mockingjay"]
+subdirs = ["/LRU", "/LFU", "/NRU", "/Rand", "/SRRIP", "/Mockingjay"]
 
 SPEC = "bzip2 gcc mcf hmmer sjeng libquantum xalan milc cactusADM leslie3d namd soplex calculix lbm".split(" ")
 PARSEC = "blackscholes bodytrack canneal fluidanimate streamcluster swaptions x264".split(" ")
@@ -64,14 +64,22 @@ for subdir in subdirs:
                                 SPEC_IPCs[1][spec] = IPC
                                 SPEC_MPKIs[1][spec] = MPKI
                                 SPEC_CCs[1][spec] = totalCycles/1000000
-                            if subdir == "/SRRIP":
+                            if subdir == "/NRU":
                                 SPEC_IPCs[2][spec] = IPC
                                 SPEC_MPKIs[2][spec] = MPKI
                                 SPEC_CCs[2][spec] = totalCycles/1000000
-                            if subdir == "/Mockingjay":
+                            if subdir == "/Rand":
                                 SPEC_IPCs[3][spec] = IPC
                                 SPEC_MPKIs[3][spec] = MPKI
                                 SPEC_CCs[3][spec] = totalCycles/1000000
+                            if subdir == "/SRRIP":
+                                SPEC_IPCs[4][spec] = IPC
+                                SPEC_MPKIs[4][spec] = MPKI
+                                SPEC_CCs[4][spec] = totalCycles/1000000
+                            if subdir == "/Mockingjay":
+                                SPEC_IPCs[5][spec] = IPC
+                                SPEC_MPKIs[5][spec] = MPKI
+                                SPEC_CCs[5][spec] = totalCycles/1000000
                         elif parsec != "": #all of these are a factor of 10 smaller
                             if subdir == "/LRU":
                                 PARSEC_IPCs[0][parsec] = IPC
@@ -81,19 +89,28 @@ for subdir in subdirs:
                                 PARSEC_IPCs[1][parsec] = IPC
                                 PARSEC_MPKIs[1][parsec] = MPKI
                                 PARSEC_CCs[1][parsec] = totalCycles/10000000
-                            if subdir == "/SRRIP":
+                            if subdir == "/NRU":
                                 PARSEC_IPCs[2][parsec] = IPC
                                 PARSEC_MPKIs[2][parsec] = MPKI
                                 PARSEC_CCs[2][parsec] = totalCycles/10000000
-                            if subdir == "/Mockingjay":
+                            if subdir == "/Rand":
                                 PARSEC_IPCs[3][parsec] = IPC
                                 PARSEC_MPKIs[3][parsec] = MPKI
                                 PARSEC_CCs[3][parsec] = totalCycles/10000000
+                            if subdir == "/SRRIP":
+                                PARSEC_IPCs[4][parsec] = IPC
+                                PARSEC_MPKIs[4][parsec] = MPKI
+                                PARSEC_CCs[4][parsec] = totalCycles/10000000
+                            if subdir == "/Mockingjay":
+                                PARSEC_IPCs[5][parsec] = IPC
+                                PARSEC_MPKIs[5][parsec] = MPKI
+                                PARSEC_CCs[5][parsec] = totalCycles/10000000
             
 width = 0.2  # Width of each bar
+spacing = 1.5
 gap = 1
-colors = ['b', 'g', 'r', 'y'] 
-names = ["LRU", "LFU", "SRRIP", "Mockingjay"]
+colors = ['b', 'g', 'r', 'y', 'c', 'm'] 
+names = ["LRU", "LFU", "NRU", "Rand", "SRRIP", "Mockingjay"]
 
 def plot_grouped_bars(x, keys, values, label_offset):
     for i, val_set in enumerate(values):
@@ -112,8 +129,8 @@ valuesCCS = [list(d.values()) for d in SPEC_CCs]
 keysCCP = list(PARSEC_CCs[0].keys())  # Same for all dicts
 valuesCCP = [list(d.values()) for d in PARSEC_CCs]
 
-xCCS = np.arange(len(keysCCS))
-xCCP = np.arange(len(keysCCP)) + len(keysCCS) + gap
+xCCS = np.arange(len(keysCCS))*spacing
+xCCP = np.arange(len(keysCCP))*spacing + len(keysCCS)*spacing + gap
 
 fig, ax = plt.subplots(figsize=(15, 7))
 
@@ -126,10 +143,10 @@ ax.set_xticks(np.concatenate((x1_labels, x2_labels)))
 ax.set_xticklabels(keysCCS + keysCCP, rotation=90)
 
 # Add a vertical line to separate the groups
-ax.axvline(x=len(keysCCS) + gap / 2 - width / 2, color='black', linestyle='--')
+ax.axvline(x=len(keysCCS)*spacing + gap / 2 - width / 2, color='black', linestyle='--')
 
-ax.text(len(keysCCS) / 2 - 0.5, ax.get_ylim()[0] - 300, "SPEC (in millions of CCs)", ha="center", fontsize=12, fontweight="bold")
-ax.text(len(keysCCS) + gap + len(keysCCP) / 2 - 0.5, ax.get_ylim()[0] - 300, "PARSEC (in tens of millions of CCs)", ha="center", fontsize=12, fontweight="bold")
+ax.text(len(keysCCS)*spacing / 2 - 0.5, ax.get_ylim()[0] - 300, "SPEC (in millions of CCs)", ha="center", fontsize=12, fontweight="bold")
+ax.text(len(keysCCS)*spacing + gap + len(keysCCP)*spacing / 2 - 0.5, ax.get_ylim()[0] - 300, "PARSEC (in tens of millions of CCs)", ha="center", fontsize=12, fontweight="bold")
 ax.set_ylim([0, 900])
 # Labels and title
 ax.set_ylabel("CCs")
@@ -150,8 +167,8 @@ valuesMPKIS = [list(d.values()) for d in SPEC_MPKIs]
 keysMPKIP = list(PARSEC_MPKIs[0].keys())  # Same for all dicts
 valuesMPKIP = [list(d.values()) for d in PARSEC_MPKIs]
 
-xMPKIS = np.arange(len(keysMPKIS))
-xMPKIP = np.arange(len(keysMPKIP)) + len(keysMPKIS) + gap
+xMPKIS = np.arange(len(keysMPKIS))*spacing
+xMPKIP = np.arange(len(keysMPKIP))*spacing + len(keysMPKIS)*spacing + gap
 
 fig, ax = plt.subplots(figsize=(15, 7))
 
@@ -164,10 +181,10 @@ ax.set_xticks(np.concatenate((x1_labels, x2_labels)))
 ax.set_xticklabels(keysMPKIS + keysMPKIP, rotation=90)
 
 # Add a vertical line to separate the groups
-ax.axvline(x=len(keysMPKIS) + gap / 2 - width / 2, color='black', linestyle='--')
+ax.axvline(x=len(keysMPKIS)*spacing + gap / 2 - width / 2, color='black', linestyle='--')
 
-ax.text(len(keysMPKIS) / 2 - 0.5, ax.get_ylim()[0] - 30, "SPEC", ha="center", fontsize=12, fontweight="bold")
-ax.text(len(keysMPKIS) + gap + len(keysMPKIP) / 2 - 0.5, ax.get_ylim()[0] - 30, "PARSEC", ha="center", fontsize=12, fontweight="bold")
+ax.text(len(keysMPKIS)*spacing / 2 - 0.5, ax.get_ylim()[0] - 30, "SPEC", ha="center", fontsize=12, fontweight="bold")
+ax.text(len(keysMPKIS)*spacing + gap + len(keysMPKIP)*spacing / 2 - 0.5, ax.get_ylim()[0] - 30, "PARSEC", ha="center", fontsize=12, fontweight="bold")
 ax.set_ylim([0, 100])
 # Labels and title
 ax.set_ylabel("MPKI")
@@ -187,8 +204,8 @@ valuesIPCS = [list(d.values()) for d in SPEC_IPCs]
 keysIPCP = list(PARSEC_IPCs[0].keys())  # Same for all dicts
 valuesIPCP = [list(d.values()) for d in PARSEC_IPCs]
 
-xIPCS = np.arange(len(keysIPCS))
-xIPCP = np.arange(len(keysIPCP)) + len(keysIPCS) + gap
+xIPCS = np.arange(len(keysIPCS))*spacing
+xIPCP = np.arange(len(keysIPCP))*spacing + len(keysIPCS)*spacing + gap
 
 fig, ax = plt.subplots(figsize=(15, 7))
 
@@ -201,10 +218,10 @@ ax.set_xticks(np.concatenate((x1_labels, x2_labels)))
 ax.set_xticklabels(keysIPCS + keysIPCP, rotation=90)
 
 # Add a vertical line to separate the groups
-ax.axvline(x=len(keysIPCS) + gap / 2 - width / 2, color='black', linestyle='--')
+ax.axvline(x=len(keysIPCS)*spacing + gap / 2 - width / 2, color='black', linestyle='--')
 
-ax.text(len(keysIPCS) / 2 - 0.5, ax.get_ylim()[0] - 1, "SPEC", ha="center", fontsize=12, fontweight="bold")
-ax.text(len(keysIPCS) + gap + len(keysIPCP) / 2 - 0.5, ax.get_ylim()[0] - 1, "PARSEC", ha="center", fontsize=12, fontweight="bold")
+ax.text(len(keysIPCS)*spacing / 2 - 0.5, ax.get_ylim()[0] - 1, "SPEC", ha="center", fontsize=12, fontweight="bold")
+ax.text(len(keysIPCS)*spacing + gap + len(keysIPCP)*spacing / 2 - 0.5, ax.get_ylim()[0] - 1, "PARSEC", ha="center", fontsize=12, fontweight="bold")
 ax.set_ylim([0, 3])
 # Labels and title
 ax.set_ylabel("IPC")

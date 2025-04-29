@@ -1,0 +1,9 @@
+Running on: linux2.engr.tamu.edu
+Start time: Tue Apr 29 01:01:25 2025
+Heartbeat time: Tue Apr 29 01:08:41 2025
+Stats since start:
+ 65294 phases
+ 652940000 cycles
+ 1497568 cycles/s
+Stats since last heartbeat (5s):
+ 15060000 cycles/s
