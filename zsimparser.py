@@ -26,7 +26,7 @@ for subdir in subdirs:
             if file.endswith(".out"):
                 file_path = Path(root) / file
                 with open(file_path, 'r') as f:
-                    print(f"Opening file: {file_path}")
+                    #print(f"Opening file: {file_path}")
                     #logic for finding stuff in the file
                     totalCycles = 0
                     instructions = 0
@@ -155,7 +155,7 @@ ax.legend()
 ax.set_title("Clock Cycles by benchmark")
 
 plt.tight_layout()
-plt.savefig('Plots/CC.png')
+plt.savefig('Results/CC.png')
 
 
 
@@ -193,7 +193,7 @@ ax.legend()
 ax.set_title("MPKI by benchmark")
 
 plt.tight_layout()
-plt.savefig('Plots/MPKI.png')
+plt.savefig('Results/MPKI.png')
 
 
 
@@ -230,4 +230,61 @@ ax.legend()
 ax.set_title("IPC by benchmark")
 
 plt.tight_layout()
-plt.savefig('Plots/IPC.png')
+plt.savefig('Results/IPC.png')
+
+#Geometric means - comparison across the board for different kinds of benchmarks
+
+with open("Results/output.txt", 'w') as file:
+    print("Mean IPC by replacement policy: ", file=file)
+    print(file=file)
+    LRU_results = []
+    for index in range(len(PARSEC_IPCs)):
+        temp_valSPEC = 1.0
+        temp_valPAR = 1.0
+        temp_valBOTH = 1.0
+        dictionary = SPEC_IPCs[index]
+        for i, key in enumerate(dictionary):
+            temp_valSPEC = temp_valSPEC*dictionary[key]
+            temp_valBOTH = temp_valBOTH*dictionary[key]
+        
+        dictionary2 = PARSEC_IPCs[index]
+        for i, key in enumerate(dictionary2):
+            temp_valPAR = temp_valPAR*dictionary2[key]
+            temp_valBOTH = temp_valBOTH*dictionary2[key]
+        if names[index] == 'LRU':
+            LRU_results.append((temp_valSPEC ** (1.0/len(dictionary))))
+            LRU_results.append((temp_valPAR ** (1.0/len(dictionary))))
+            LRU_results.append((temp_valBOTH ** (1.0/len(dictionary))))
+        print(f'{names[index]}', file=file)
+        print(f'SPEC: {(temp_valSPEC ** (1.0/len(dictionary)))}, {((temp_valSPEC ** (1.0/len(dictionary)))/LRU_results[0] - 1)* 100}% better than LRU', file=file)
+        print(f'PARSEC: {(temp_valPAR ** (1.0/len(dictionary)))}, {((temp_valPAR ** (1.0/len(dictionary)))/LRU_results[1] - 1)* 100}% better than LRU', file=file)
+        print(f'BOTH: {(temp_valBOTH ** (1.0/len(dictionary)))}, {((temp_valBOTH ** (1.0/len(dictionary)))/LRU_results[2] - 1)* 100}% better than LRU', file=file)
+        print(file=file)
+
+    
+    print("Mean MPKI by replacement policy: ", file=file)
+    LRU_results = []
+    for index in range(len(PARSEC_MPKIs)):
+        temp_valSPEC = 1.0
+        temp_valPAR = 1.0
+        temp_valBOTH = 1.0
+        dictionary = SPEC_MPKIs[index]
+        for i, key in enumerate(dictionary):
+            temp_valSPEC = temp_valSPEC*dictionary[key]
+            temp_valBOTH = temp_valBOTH*dictionary[key]
+        
+        dictionary2 = PARSEC_MPKIs[index]
+        for i, key in enumerate(dictionary2):
+            temp_valPAR = temp_valPAR*dictionary2[key]
+            temp_valBOTH = temp_valBOTH*dictionary2[key]
+
+        if names[index] == 'LRU':
+            LRU_results.append((temp_valSPEC ** (1.0/len(dictionary))))
+            LRU_results.append((temp_valPAR ** (1.0/len(dictionary))))
+            LRU_results.append((temp_valBOTH ** (1.0/len(dictionary))))
+
+        print(file=file)
+        print(f'{names[index]}', file=file)
+        print(f'SPEC: {(temp_valSPEC ** (1.0/len(dictionary)))}, {((temp_valSPEC ** (1.0/len(dictionary)))/LRU_results[0] - 1)* -100}% better than LRU', file=file)
+        print(f'PARSEC: {(temp_valPAR ** (1.0/len(dictionary)))}, {((temp_valPAR ** (1.0/len(dictionary)))/LRU_results[1] - 1)* -100}% better than LRU', file=file)
+        print(f'BOTH: {(temp_valBOTH ** (1.0/len(dictionary)))}, {((temp_valBOTH ** (1.0/len(dictionary)))/LRU_results[2] - 1)* -100}% better than LRU', file=file)
