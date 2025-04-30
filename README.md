@@ -4,8 +4,6 @@
 
 ## Project Description
 
-Below we discuss the goal of the term project and the primary sources we used to accomplish this goal
-
 ### Project Goal
 
 This project aims to emulate a modern cache replacement algorithm. After conducting a literature review consisting of papers from top Computer Architecture confereneces such as ISCA, HPCA, and MICRO, we choose a paper to implement its proposed algorithm in the Zsim Simulator. The goal is to recreate the results expressed in the research paper, learning about the simulator and a bleeding edge cache replacement policy in the process. After implementation and simulation, we write a report on our findings, explaining any discrepencies from the source paper. The primary restriction is that the chosen paper and algorithm should not already have an open source Zsim implementation available to use.
@@ -84,8 +82,6 @@ Before running the simulations, make two optional changes:
 - In group10/zsim/termProjectRunScript line 9, include all desired replacement policies in this format ``repl_policy: <policy_name_1> policy_name_2 .... policy_name_n"``
 
 We have setup the scripts to run through simulations of Mockingjay, LRU, LFU, NRU, Rand, and SRRIP. The config files already exist as well.
-
-# - TODO: ^^^ DO THIS IN THE RUN SCRIPTS
 
 <hr/>
 
