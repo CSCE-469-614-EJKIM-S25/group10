@@ -24,11 +24,18 @@ This is the link to the public GitHub repository from one of the authors of the 
 
 ### File Organization & Hierarchy 
 
-This project utilizes Zsim, an open source simulator, to emulate a processor and run the desired algoritms. Zsim has pre-built implementations of LRU, NRU, Random, LFU, and others. Adding a new replacement policy requires creating a new class whose parent is the virtual class, replPolicy. In this child class, we simply implement rank(), update(), and replaced() along with the constructor and destructor to override the virtual methods.
+This project utilizes Zsim, an open source simulator, to emulate a processor and run the desired algoritms. Zsim has pre-built implementations of LRU, NRU, Random, LFU, and others. Adding a new replacement policy requires creating a new class whose parent is the virtual class, replPolicy. In this child class, we simply implement rank(), update(), and replaced() along with the constructor and destructor to override the virtual methods. The implementation of the Mockingjay replacement policy is located in the ./zsim/src/ directory and is named mockingjay_repl.h, the implementation of SRRIP is in the same directory in a file named rrip_repl.h, while the replacement policies that are included in zsim are in the same directory in the repl_policies.h file.
+
+In addition to creating the new replacement policy class, we had to edit a variety of other files to be able to pass PC values to the replacement policy class. We did this by getting the PC value using the ``INS_Address`` Pin API call, which gets the PC value from an instruction. 
+
+In order to do this we edited the following files in the zsim/src/ directory:
+coherence_ctrls.cpp, coherence_ctrls.h, core.h, decoder.cpp (where we used the Pin API call), decoder.h, filter_cache.h, memory_hierarchy.h, null_core.cpp, null_core.h, ooo_core.cpp, ooo_core.h, prefetcher.cpp, simple_core.cpp, simple_core.h, timing_core.cpp, timing_core.h, and zsim.cpp.
+
+Most of the edits were changing memory requests and function arguments to include a pc value.
 
 Further, the source code references config files which detail the processor type (e.g OOO) and structure (single core vs multicore), cache hierarchy (how many levels of cache) and structure (size and associativity of cache), replacement policy, and the benchmark that is being used (PARSEC, SPEC, etc). These config files are located in group10/zsim/ and we created configurations for multiple PARSEC benchmarks (testing multicore capabilities) and SPEC benchmarks (single core capabilities).
 
-### Required Environnments 
+### Required Environments 
 
 A Python enviornment is required to be able to compile Zsim with any files added for algorithm implementation. The set up process for this environment is detailed below. Further, the benchmarks must be unzipped in the simulator after cloning the repository. This is also detailed below. Otherwise, all our results can be found an regenerated through the files provided in the simulator.
 
@@ -82,23 +89,23 @@ We have setup the scripts to run through simulations of Mockingjay, LRU, LFU, NR
 
 <hr/>
 
-To run, execute ``./termProjectAutoRunScript.sh`` in ``group10/zsim/``. 
+To run, execute ``./termProjectAutoRunScript.sh`` in group10/zsim/. 
 - It is possible that the request is denied because of permissions. If this happens, run the following command: ``chmod 755 ./termProjectAutoRunScript.sh`` then re-execute.
 
 One at a time, this script will run each benchmark for each policy and the outputs will be generated.
 
 ## Output File Format and Folder Path
 
-The output files are under the ``./zsim/outputs/`` directory, and are organized into subdirectories by replacement policy.
+The output files are under the ./zsim/outputs/ directory, and are organized into subdirectories by replacement policy. Each output file contains 7 files, including zsim.out, which is the simulation information for that benchmark.
 
 ## Instructions to Generate Plots and Results Information
 
-Ensure that you are in the ``group10`` directory, and that you have ``pip`` installed and in your PATH variables, then run:
+Ensure that you are in the group10 directory, then run:
 ```
 pip install -r requirements.txt
 ./zsimparser.py
 ```
-requirements.txt contains dependencies necessary to run ``zsimparser.py`` and the installation of these dependencies and running of the script may be done in a python virtual environment.
+requirements.txt contains dependencies necessary to run zsimparser.py and the installation of these dependencies and running of the script may be done in a python virtual environment.
 
 Result plots will be generated in the ./Results directory as CC.png (clock cycle comparison), IPC.png (instructions per clock cycle comparison), and MPKI.png (misses per kilo-instruction comparison) alongside output.txt that holds the geometric mean IPC and MPKI for all benchmarks. 
 
