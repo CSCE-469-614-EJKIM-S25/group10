@@ -98,4 +98,8 @@ Ensure that you are in the ``group10`` directory, and that you have ``pip`` inst
 pip install -r requirements.txt
 ./zsimparser.py
 ```
-requirements.txt contains dependencies necessary to run ``zsimparser.py`` and installing these dependencies may be done in a python virtual environment.
+requirements.txt contains dependencies necessary to run ``zsimparser.py`` and the installation of these dependencies and running of the script may be done in a python virtual environment.
+
+Result plots will be generated in the ./Results directory as CC.png (clock cycle comparison), IPC.png (instructions per clock cycle comparison), and MPKI.png (misses per kilo-instruction comparison) alongside output.txt that holds the geometric mean IPC and MPKI for all benchmarks. 
+
+If running a subset of these benchmarks, remove the unused benchmarks from line 13 and 14 of zsimparser.py, making sure to keep the necessary benchmarks space separated.
