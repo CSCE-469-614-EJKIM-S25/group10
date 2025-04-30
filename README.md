@@ -1,6 +1,6 @@
 <h1 align="center">CSCE 469/614 Group 10 Term Project - Mockingjay Cache Replacement Policy</h1>
 
-<h4 align="center">Authors: Ben Armstrong, Lohitaksh Allampalli, Mathimalar Mathivanan</h1>
+<h4 align="center">Authors: Lohitaksh Allampalli, Ben Armstrong, Mathimalar Mathivanan</h1>
 
 ## Project Description
 
@@ -82,12 +82,20 @@ We have setup the scripts to run through simulations of Mockingjay, LRU, LFU, NR
 
 <hr/>
 
-To run, execute ./termProjectAutoRunScript.sh in group10/zsim/. 
+To run, execute ``./termProjectAutoRunScript.sh`` in ``group10/zsim/``. 
 - It is possible that the request is denied because of permissions. If this happens, run the following command: ``chmod 755 ./termProjectAutoRunScript.sh`` then re-execute.
 
 One at a time, this script will run each benchmark for each policy and the outputs will be generated.
 
 ## Output File Format and Folder Path
 
-# TODO: Discuss where the output files go and what their format is
-# TODO: Discuss how to generate the plots given these output files
+The output files are under the ``./zsim/outputs/`` directory, and are organized into subdirectories by replacement policy.
+
+## Instructions to Generate Plots and Results Information
+
+Ensure that you are in the ``group10`` directory, and that you have ``pip`` installed and in your PATH variables, then run:
+```
+pip install -r requirements.txt
+./zsimparser.py
+```
+requirements.txt contains dependencies necessary to run ``zsimparser.py`` and installing these dependencies may be done in a python virtual environment.
